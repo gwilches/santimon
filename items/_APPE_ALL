@@ -1,0 +1,13 @@
+(SELECT 'appError_autoCommit',count(*)  FROM cwprocesseventlog where description like '%autoCommit is enabled%' and event_time between (now() - interval '5 minutes') and now())
+union
+(SELECT 'appError_deadlocks',count(*)  FROM cwprocesseventlog where description like '%dead%' and event_time between (now() - interval '5 minutes') and now())
+union
+(SELECT 'appError_ALL',count(*)  FROM cwprocesseventlog where  event_time between (now() - interval '5 minutes') and now())
+union
+(SELECT 'appError_slow_api',count(*) FROM cwmessagelog where inter_type =2394 and operation = 'on.service:onapi/createShoppingCart' and EXTRACT(EPOCH FROM (send_time - receive_time))> 5 and CREATION_TIME between (now() - interval '5 minutes') and now()
+)
+union
+(select 'command_orders',count(*) from cwmessagelog c where c.creation_time  between now() - interval '5 minutes' and now() and c.operation = 'cwl_fullStack:BSCSJMSInterface/get')
+
+
+

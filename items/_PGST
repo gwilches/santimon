@@ -1,0 +1,34 @@
+(select 'slow_queries',count(*) from  pg_stat_activity where state='active' and query not like '%autovacuum%' and  (now - query_start) > interval '5 minutes' order by 2 limit 10)
+union
+(select 'dead rows', sum(n_dead_tup) from pg_stat_user_tables)
+union
+(SELECT 'blks_read',sum(blks_read)   FROM pg_stat_database)
+union
+(SELECT 'blks_hit',sum(blks_hit)  FROM pg_stat_database)
+union
+(SELECT 'tup_returned',sum(tup_returned)  FROM pg_stat_database)
+union
+(SELECT 'tup_fetched',sum(tup_fetched)  FROM pg_stat_database)
+union
+(SELECT 'tup_inserted',sum(tup_inserted)  FROM pg_stat_database)
+union
+(SELECT 'tup_updated',sum(tup_updated)  FROM pg_stat_database)
+union
+(SELECT 'tup_deleted',sum(tup_deleted)  FROM pg_stat_database)
+union
+(SELECT 'deadlocks',sum(deadlocks)  FROM pg_stat_database)
+union
+(SELECT 'blk_read_time',sum(blk_read_time)  FROM pg_stat_database)
+union
+(SELECT 'blk_write_time',sum(blk_write_time)  FROM pg_stat_database)
+union
+(SELECT 'xact_commit',sum(xact_commit)  FROM pg_stat_database)
+union
+(SELECT 'xact_rollback',sum(xact_rollback)  FROM pg_stat_database)
+union
+(select concat('conn_',state), count(*) from pg_stat_activity  where pid <> pg_backend_pid() and client_addr is not null group by 1 )
+union
+(select 'conn_total', count(*) from pg_stat_activity  where pid <> pg_backend_pid() and client_addr is not null )
+
+
+

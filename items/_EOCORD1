@@ -1,0 +1,17 @@
+with datam as(
+        select oi.channel,sum(decode(oi.ostate,'O_NR_SUB',1,0)) as Submitted,
+        sum(decode(oi.ostate,'O_NR_DRA',1,0)) as Draft,
+        sum(decode(oi.ostate,'C_A',1,0)) as AbortedServer,
+        sum(decode(oi.ostate,'C_X',1,0)) as AbortedClient,
+        sum(decode(oi.ostate,'O_R_PRO',1,0)) as InProgress,
+        sum(decode(oi.ostate,'C_C',1,0)) as Completed,
+        count(1) as total from cworderinstance  oi
+        where 1=1 and createdby not like '%jms%'
+        and oi.creationdate  between now() - interval '5 minutes' and now()
+        group by oi.channel order by 1 desc
+)
+(select * from datam)
+union all
+(select 'GrandTotal',sum(Submitted),sum(Draft),sum(AbortedServer),
+        sum(AbortedClient),sum(InProgress),
+        sum(Completed),sum(total) from datam);

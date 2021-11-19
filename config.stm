@@ -1,0 +1,53 @@
+[General]
+localPath=/mnt/c/Users/egermwi/Documents/myScripts/dev/santimon
+loader="http:/localhost/ALM2/loader.php"
+
+[OS EDB]
+type=ssh
+host=10.156.37.46
+port=22
+labelname=eocpdb
+os_user=egermwi
+playlistNum=1
+playlist=<<EOT
+templates/linuxBasic.tpl
+EOT
+
+
+
+
+[EDB EOC]
+type=psql
+host=10.156.37.46
+port=5444
+labelname=eocpdb
+db_user=eocpuser
+db_name=eocpdb
+playlistNum=2
+playlist=<<EOT
+templates/psql.tpl
+templates/eocpdb.tpl
+EOT
+
+
+[EDB SR]
+type=psql
+host=10.156.37.46
+port=5445
+labelname=srpdb
+db_user=eocpuser
+db_name=srpdb
+playlistNum=1
+playlist=templates/psql.tpl
+
+
+
+[EDB ECM]
+type=psql
+host=10.156.37.46
+port=5446
+labelname=ecmpdb
+db_user=eocpuser
+db_name=ecmpdb
+playlistNum=1
+playlist=templates/psql.tpl

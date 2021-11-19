@@ -1,0 +1,13 @@
+select concat('AVM_status_',ip), to_char(lastupdateddate,'YYYY-MM-DD HH24:MI:SS')  from cwvminfo c2;
+
+
+SELECT count(*)  FROM ECM.CWVMINFO INF, ECM.CW_AVM_LOAD AVM WHERE AVM.AVM_ID = INF.AVM_ID AND LOAD_TYPE=-1;
+
+
+ Eric55on.2017
+
+
+muito possivelmente o inbuffer server8 irá para as nuvens, por favor ajude-o a parar e drenar quando necessário
+
+
+hagrp -switch FM_Server2_grp -to li1emmappf02

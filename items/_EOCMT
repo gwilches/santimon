@@ -1,0 +1,10 @@
+select count(*), participant_type from cwpworklist c where creation_date > '2021-03-10 12:00:00'  group by participant_type;
+
+[EOCP3DB1]
+Driver = Oracle 12c ODBC driver
+ServerName = EOCP3DB1
+UserID =ZABBIX
+Password=eCmT!15Si
+
+
+
